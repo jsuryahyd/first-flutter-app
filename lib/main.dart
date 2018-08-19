@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import './ProductsService.dart';
+
 void main() {
   runApp(MyApp());
 }
@@ -12,10 +14,7 @@ class MyApp extends StatelessWidget {
         appBar: AppBar(
           title: Text('EasyList'),
         ),
-        body:Card(child: Column(children:<Widget>[
-Image.asset('assets/traditional-lunch.jpg'),
-Text('Food Paradise')
-        ]),)
+        body: Container(margin: EdgeInsets.all(8.0), child: ProductsService('South Indian')),
       ),
     );
   }
