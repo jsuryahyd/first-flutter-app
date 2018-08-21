@@ -28,6 +28,7 @@ class ProductsServiceState extends State<ProductsService> {
               children: <Widget>[
                 RaisedButton(
                   child: Text('Add Item'),
+                  color: Theme.of(context).primaryColor,
                   onPressed: () {
                     setState(() {
                       {
@@ -54,4 +55,11 @@ class ProductsServiceState extends State<ProductsService> {
       ],
     );
   }
+
+  @override
+    void didUpdateWidget(ProductsService oldWidget) {
+      // TODO: implement didUpdateWidget
+      super.didUpdateWidget(oldWidget);
+      print(oldWidget);
+    }
 }
