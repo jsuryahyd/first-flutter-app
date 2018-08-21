@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import './Products.dart';
+import './AddItemsButton.dart';
 
 class ProductsService extends StatefulWidget {
   final String defaultItem;
@@ -26,29 +27,22 @@ class ProductsServiceState extends State<ProductsService> {
             margin: EdgeInsets.only(bottom: 8.0),
             child: Column(
               children: <Widget>[
-                RaisedButton(
-                  child: Text('Add Item'),
-                  color: Theme.of(context).primaryColor,
-                  onPressed: () {
-                    setState(() {
-                      {
-                        _items.add('Afghan');
-                        print(_items);
-                      }
-                    });
-                  },
+                new Container(
+                  margin: EdgeInsets.only(bottom: 8.0),
+                  child: RaisedButton(
+                    child: Text('Add Item'),
+                    color: Theme.of(context).primaryColor,
+                    onPressed: () {
+                      setState(() {
+                        {
+                          _items.add('Afghan');
+                          print(_items);
+                        }
+                      });
+                    },
+                  ),
                 ),
-                RaisedButton(
-                  child: Text('Clear Items'),
-                  onPressed: () {
-                    setState(() {
-                      {
-                        _items = [];
-                        print(_items);
-                      }
-                    });
-                  },
-                ),
+                AddItemsButton(addItems),
               ],
             )),
         Products(_items)
@@ -56,10 +50,19 @@ class ProductsServiceState extends State<ProductsService> {
     );
   }
 
+  void addItems() {
+    setState(() {
+      {
+        _items = [];
+        print(_items);
+      }
+    });
+  }
+
   @override
-    void didUpdateWidget(ProductsService oldWidget) {
-      // TODO: implement didUpdateWidget
-      super.didUpdateWidget(oldWidget);
-      print(oldWidget);
-    }
+  void didUpdateWidget(ProductsService oldWidget) {
+    // TODO: implement didUpdateWidget
+    super.didUpdateWidget(oldWidget);
+    print(oldWidget);
+  }
 }

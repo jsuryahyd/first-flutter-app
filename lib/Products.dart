@@ -7,11 +7,11 @@ class Products extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: items
-          .map((item) => Card(
+          .map((item) => Card(child:new Padding( padding:EdgeInsets.all(5.0),
                 child: Column(children: <Widget>[
                   //Image.asset('assets/traditional-lunch.jpg'),
                   Text(item)
-                ]),
+                ]),)
               ))
           .toList(),
     );
