@@ -9,7 +9,7 @@ class Products extends StatelessWidget {
       children: items
           .map((item) => Card(child:new Padding( padding:EdgeInsets.all(5.0),
                 child: Column(children: <Widget>[
-                  //Image.asset('assets/traditional-lunch.jpg'),
+                  Image.asset('assets/traditional-lunch.jpg'),
                   Text(item)
                 ]),)
               ))
