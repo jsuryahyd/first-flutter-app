@@ -5,7 +5,7 @@ class Products extends StatelessWidget {
   Products(this.items);
 
   Widget build(BuildContext context) {
-    return Column(
+    return ListView(
       children: items
           .map((item) => Card(child:new Padding( padding:EdgeInsets.all(5.0),
                 child: Column(children: <Widget>[

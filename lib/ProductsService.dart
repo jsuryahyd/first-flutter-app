@@ -45,7 +45,8 @@ class ProductsServiceState extends State<ProductsService> {
                 AddItemsButton(addItems),
               ],
             )),
-        Products(_items)
+      
+        Expanded(child:Products(_items))
       ],
     );
   }
