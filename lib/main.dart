@@ -4,6 +4,7 @@ import 'package:flutter/rendering.dart';
 import './ProductsService.dart';
 
 void main() {
+  debugPaintSizeEnabled = true;
   runApp(MyApp());
   debugPaintSizeEnabled = true;
   debugPaintPointersEnabled = true;
