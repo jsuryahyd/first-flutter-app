@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
         ),
         body: Container(
             margin: EdgeInsets.all(8.0),
-            child: ProductsService('South Indian')),
+            child: ProductsService()),
       ),
     );
   }

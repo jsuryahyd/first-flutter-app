@@ -5,7 +5,7 @@ import './AddItemsButton.dart';
 
 class ProductsService extends StatefulWidget {
   final String defaultItem;
-  ProductsService(this.defaultItem);
+  ProductsService({this.defaultItem});
   @override
   State<StatefulWidget> createState() {
     return ProductsServiceState();
@@ -13,11 +13,12 @@ class ProductsService extends StatefulWidget {
 }
 
 class ProductsServiceState extends State<ProductsService> {
-  List _items = [];
+  List _items = ['sweet','chutney','pickle','fry curry'];
 
   void initState() {
     super.initState();
-    _items.add(widget.defaultItem);
+    String defaultItem = widget.defaultItem;
+    defaultItem != null ? _items.add(defaultItem) : (){}();
   }
 
   Widget build(BuildContext context) {
@@ -45,7 +46,7 @@ class ProductsServiceState extends State<ProductsService> {
                 AddItemsButton(addItems),
               ],
             )),
-        Products(_items)
+        Expanded(child: Products(_items),)
       ],
     );
   }

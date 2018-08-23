@@ -5,7 +5,7 @@ class Products extends StatelessWidget {
   Products(this.items);
 
   Widget build(BuildContext context) {
-    return Column(
+    return items!=null ? Column(
       children: items
           .map((item) => Card(child:new Padding( padding:EdgeInsets.all(5.0),
                 child: Column(children: <Widget>[
@@ -14,6 +14,6 @@ class Products extends StatelessWidget {
                 ]),)
               ))
           .toList(),
-    );
+    ) : Center(child:Text('no items yet.'));
   }
 }
