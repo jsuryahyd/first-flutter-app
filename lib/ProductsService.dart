@@ -13,12 +13,12 @@ class ProductsService extends StatefulWidget {
 }
 
 class ProductsServiceState extends State<ProductsService> {
-  List _items = ['sweet','chutney','pickle','fry curry'];
+  List _items = ['sweet', 'chutney', 'pickle', 'fry curry'];
 
   void initState() {
     super.initState();
     String defaultItem = widget.defaultItem;
-    defaultItem != null ? _items.add(defaultItem) : (){}();
+    defaultItem != null ? _items.add(defaultItem) : () {}();
   }
 
   Widget build(BuildContext context) {
@@ -46,7 +46,9 @@ class ProductsServiceState extends State<ProductsService> {
                 AddItemsButton(addItems),
               ],
             )),
-        Expanded(child: Products(_items),)
+        Expanded(
+          child: Products(_items),
+        )
       ],
     );
   }
