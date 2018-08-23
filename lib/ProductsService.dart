@@ -14,6 +14,7 @@ class ProductsService extends StatefulWidget {
 
 class ProductsServiceState extends State<ProductsService> {
   List _items = ['sweet', 'chutney', 'pickle', 'fry curry'];
+  // List _items = [];
 
   void initState() {
     super.initState();
