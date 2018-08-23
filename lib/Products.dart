@@ -6,7 +6,8 @@ class Products extends StatelessWidget {
 
   Widget build(BuildContext context) {
     Widget productsWidget =  Center(child:Text('No items yet.'));
-    if(items.length > 0){
+    print(items);
+    if(items.length > 0 && items.length < 4){
       productsWidget = Column(
       children: items
           .map((item) => Card(child:new Padding( padding:EdgeInsets.all(5.0),
@@ -17,6 +18,13 @@ class Products extends StatelessWidget {
               ))
           .toList(),
     );
+    }else if(items.length >= 4){
+      productsWidget = ListView.builder(itemBuilder: (BuildContext context,int index){
+        return Card(child:Column(children:[
+          Image.asset('assets/traditional-lunch.jpg'),
+          Text(items[index])
+        ]));
+      },itemCount: items.length,);
     }
     return productsWidget;
   }
