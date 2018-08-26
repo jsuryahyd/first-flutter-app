@@ -4,10 +4,9 @@ import 'package:flutter/rendering.dart';
 import './ProductsListPage.dart';
 
 void main() {
-  debugPaintSizeEnabled = true;
   runApp(MyApp());
   debugPaintSizeEnabled = true;
-  debugPaintPointersEnabled = true;
+  // debugPaintPointersEnabled = true;
 }
 
 class MyApp extends StatelessWidget {
@@ -17,7 +16,7 @@ class MyApp extends StatelessWidget {
       // debugShowMaterialGrid: true,
       theme: ThemeData(
         primarySwatch: Colors.deepOrange,
-        accentColor: Colors.deepPurpleAccent,
+        accentColor: Colors.yellowAccent,
       ),
       home: ProductsListPage()
     );
