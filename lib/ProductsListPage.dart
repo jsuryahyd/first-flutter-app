@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
 
 import './ProductsService.dart';
-class ProductsListPage extends StatelessWidget{
+
+class ProductsListPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text('EasyList'),
-        ),
-        body: Container(
-            margin: EdgeInsets.all(8.0),
-            child: ProductsService()),
-      );
+      appBar: AppBar(
+        title: Text('EasyList'),
+      ),
+      body: Container(
+        margin: EdgeInsets.all(8.0),
+        child: ProductsService({'name': 'Sweet', 'img': 'assets/images/sweet.jpg'}),
+      ),
+    );
   }
-  
 }

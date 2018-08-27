@@ -4,8 +4,8 @@ import './Products.dart';
 import './AddItemsButton.dart';
 
 class ProductsService extends StatefulWidget {
-  final String defaultItem;
-  ProductsService({this.defaultItem});
+  final Map defaultItem;
+  ProductsService(this.defaultItem);
   @override
   State<StatefulWidget> createState() {
     return ProductsServiceState();
@@ -13,11 +13,11 @@ class ProductsService extends StatefulWidget {
 }
 
 class ProductsServiceState extends State<ProductsService> {
-  List _items = ['sweet', 'chutney', 'pickle', 'fry curry'];
+  List <Map>_items = [{'name':'sweet','img':'assets/images/sweet.jpg'}, {'name':'chutney','img':'assets/images/chutney.jpg'},{'name': 'pickle','img':'assets/images/pickle.jpg'}, {'name':'fry curry','img':'assets/images/fryCurry.jpg'}];
 
   void initState() {
     super.initState();
-    String defaultItem = widget.defaultItem;
+    Map defaultItem = widget.defaultItem;
     defaultItem != null ? _items.add(defaultItem) : () {}();
   }
 
@@ -36,7 +36,7 @@ class ProductsServiceState extends State<ProductsService> {
                     onPressed: () {
                       setState(() {
                         {
-                          _items.add('Afghan');
+                          _items.add({'name':'Naan','img':'assets/images/naan.jpg'});
                           print(_items);
                         }
                       });

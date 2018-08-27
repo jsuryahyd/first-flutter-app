@@ -7,12 +7,13 @@ class Products extends StatelessWidget {
   Products(this.items);
 
   Widget _builderFunc(BuildContext context, int index) {
+    Map item = items[index];
     return Card(
         child: new Padding(
       padding: EdgeInsets.all(5.0),
       child: Column(children: <Widget>[
-        Image.asset('assets/traditional-lunch.jpg'),
-        Text(items[index]),
+        Image.asset(item['img']),
+        Text(item['name']),
         ButtonBar(
           children: <Widget>[
             FlatButton(
@@ -20,7 +21,7 @@ class Products extends StatelessWidget {
               onPressed: () => Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (BuildContext context) => ProductPage())),
+                      builder: (BuildContext context) => ProductPage(item))),
             ),
           ],
         )

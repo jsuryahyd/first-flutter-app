@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
+// import 'package:flutter/rendering.dart';
 
 import './ProductsListPage.dart';
 
 void main() {
   runApp(MyApp());
-  debugPaintSizeEnabled = true;
+  // debugPaintSizeEnabled = true;
   // debugPaintPointersEnabled = true;
 }
 

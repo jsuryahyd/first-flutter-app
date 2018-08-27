@@ -8,7 +8,7 @@
         <option name="GEN_FOLDER_RELATIVE_PATH_AIDL" value="/android/gen" />
         <option name="MANIFEST_FILE_RELATIVE_PATH" value="/android/AndroidManifest.xml" />
         <option name="RES_FOLDER_RELATIVE_PATH" value="/android/res" />
-        <option name="ASSETS_FOLDER_RELATIVE_PATH" value="/android/assets" />
+        <option name="ASSETS_FOLDER_RELATIVE_PATH" value="/androidassets" />
         <option name="LIBS_FOLDER_RELATIVE_PATH" value="/android/libs" />
         <option name="PROGUARD_LOGS_FOLDER_RELATIVE_PATH" value="/android/proguard_logs" />
       </configuration>
