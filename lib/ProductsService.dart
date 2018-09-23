@@ -47,7 +47,7 @@ class ProductsServiceState extends State<ProductsService> {
               ],
             )),
         Expanded(
-          child: Products(_items),
+          child: Products(_items,deleteProduct),
         )
       ],
     );
@@ -67,5 +67,12 @@ class ProductsServiceState extends State<ProductsService> {
     // TODO: implement didUpdateWidget
     super.didUpdateWidget(oldWidget);
     print(oldWidget);
+  }
+
+  void deleteProduct(index){
+    setState(() {
+          _items.removeAt(index);
+          print(_items);
+        });
   }
 }
