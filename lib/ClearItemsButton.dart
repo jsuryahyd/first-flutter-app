@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-class AddItemsButton extends StatelessWidget{
+class ClearItemsButton extends StatelessWidget{
   final clickFunc;
-  AddItemsButton(this.clickFunc);
+  ClearItemsButton(this.clickFunc);
   
   @override
   Widget build(BuildContext context){

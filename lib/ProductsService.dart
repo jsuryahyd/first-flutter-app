@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import './Products.dart';
-import './AddItemsButton.dart';
+import './ClearItemsButton.dart';
 
 class ProductsService extends StatefulWidget {
   final Map defaultItem;
@@ -43,7 +43,7 @@ class ProductsServiceState extends State<ProductsService> {
                     },
                   ),
                 ),
-                AddItemsButton(addItems),
+                ClearItemsButton(addItems),
               ],
             )),
         Expanded(

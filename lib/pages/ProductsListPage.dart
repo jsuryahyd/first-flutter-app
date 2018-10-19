@@ -8,10 +8,10 @@ class ProductsListPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       drawer: Drawer(
-          child: Column(children: <Widget>[
+        child: Column(children: <Widget>[
         AppBar(automaticallyImplyLeading: false, title: Text('choose')),
         ListTile(
-          title: Text('whatever'),
+          title: Text('Create Product'),
           onTap: () {
             Navigator.push(
               context,
