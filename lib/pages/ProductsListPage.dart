@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../ProductsService.dart';
-import './createProduct.dart';
 
 class ProductsListPage extends StatelessWidget {
   @override
@@ -13,12 +12,13 @@ class ProductsListPage extends StatelessWidget {
         ListTile(
           title: Text('Create Product'),
           onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (BuildContext context) {
-                return CreateProduct();
-              }),
-            );
+            // Navigator.push(
+            //   context,
+            //   MaterialPageRoute(builder: (BuildContext context) {
+            //     return CreateProduct();
+            //   }),
+            // );
+            Navigator.pushReplacementNamed(context,'createProduct');
           },
         )
       ])),
