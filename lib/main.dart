@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 import './pages/authPage.dart';
 import './pages/createProduct.dart';
-
+import './pages/productsAdmin.dart';
 
 void main() {
   runApp(MyApp());
@@ -23,7 +23,12 @@ class MyApp extends StatelessWidget {
       home: AuthPage(),
       routes:{
         'createProduct':(BuildContext context)=>CreateProduct(),
-      }
+        '/productsAdmin':(BuildContext context)=>ProductsAdmin(),
+       },
+      // onGenerateRoute: (RouteSettings settings){
+      //   final List<String> pathElements = settings.name.split('/');
+
+      // },
     );
   }
 }
