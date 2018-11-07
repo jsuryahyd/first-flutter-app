@@ -3,6 +3,13 @@ import 'package:flutter/material.dart';
 import '../ProductsService.dart';
 
 class ProductsListPage extends StatelessWidget {
+  final Function addItem;
+  final Function deleteItem;
+  final List<Map<String,String>> items;
+
+
+
+  ProductsListPage(this.items,this.deleteItem,this.addItem);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,8 +34,7 @@ class ProductsListPage extends StatelessWidget {
       ),
       body: Container(
         margin: EdgeInsets.all(8.0),
-        child: ProductsService(
-            {'name': 'Sweet', 'img': 'assets/images/sweet.jpg'}),
+        child: Products(this.items,this.deleteItem,this.addItem),
       ),
     );
   }

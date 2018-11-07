@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import './ProductsListPage.dart';
 
 class AuthPage extends StatelessWidget {
   Widget build(BuildContext context) {
@@ -11,9 +10,7 @@ class AuthPage extends StatelessWidget {
       ),
       body: Center(child:RaisedButton(
         onPressed: (){
-          Navigator.pushReplacement(context, MaterialPageRoute(builder: (BuildContext context){
-            return ProductsListPage();
-          }),);
+          Navigator.pushReplacementNamed(context,'ProductsPage');
         },
         child:Text('Login')
       )),
