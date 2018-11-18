@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-// import './productsAdmin.dart';
+import './productsAdmin.dart';
 
 class CreateProduct extends StatelessWidget {
   // CreateProduct()
@@ -12,12 +12,12 @@ class CreateProduct extends StatelessWidget {
         child: FlatButton(
           child: Text('Create New'),
           onPressed: () {
-            Navigator.pushNamed(
+            Navigator.push(
               context,
-              // MaterialPageRoute(
-              //   builder: (BuildContext context) => ProductsAdmin(),
-              // ),
-              '/productsAdmin'
+              MaterialPageRoute(
+                builder: (BuildContext context) => ProductsAdmin(),
+              ),
+              // '/productsAdmin'
             );
           },
         ),

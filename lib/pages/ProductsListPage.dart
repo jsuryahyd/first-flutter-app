@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../ProductsService.dart';
+import './productsAdmin.dart';
+
 
 class ProductsListPage extends StatelessWidget {
   @override
@@ -10,15 +12,15 @@ class ProductsListPage extends StatelessWidget {
         child: Column(children: <Widget>[
         AppBar(automaticallyImplyLeading: false, title: Text('choose')),
         ListTile(
-          title: Text('Create Product'),
+          title: Text('Manage Products'),
           onTap: () {
-            // Navigator.push(
-            //   context,
-            //   MaterialPageRoute(builder: (BuildContext context) {
-            //     return CreateProduct();
-            //   }),
-            // );
-            Navigator.pushReplacementNamed(context,'createProduct');
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (BuildContext context) {
+                return ProductsAdmin();
+              }),
+            );
+            // Navigator.pushReplacementNamed(context,'createProduct');
           },
         )
       ])),

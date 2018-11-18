@@ -24,28 +24,6 @@ class ProductsServiceState extends State<ProductsService> {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        Container(
-            margin: EdgeInsets.only(bottom: 8.0),
-            child: Column(
-              children: <Widget>[
-                new Container(
-                  margin: EdgeInsets.only(bottom: 8.0),
-                  child: RaisedButton(
-                    child: Text('Add Item'),
-                    color: Theme.of(context).primaryColor,
-                    onPressed: () {
-                      setState(() {
-                        {
-                          _items.add({'name':'Naan','img':'assets/images/naan.jpg'});
-                          print(_items);
-                        }
-                      });
-                    },
-                  ),
-                ),
-                ClearItemsButton(addItems),
-              ],
-            )),
         Expanded(
           child: Products(_items,deleteProduct),
         )
