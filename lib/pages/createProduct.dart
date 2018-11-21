@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import './productsAdmin.dart';
 
 class CreateProduct extends StatelessWidget {
+  CreateProduct();
   // CreateProduct()
   Widget build(BuildContext context) {
     return Scaffold(
@@ -12,11 +13,9 @@ class CreateProduct extends StatelessWidget {
         child: FlatButton(
           child: Text('Create New'),
           onPressed: () {
-            Navigator.push(
+            Navigator.pushNamed(
               context,
-              MaterialPageRoute(
-                builder: (BuildContext context) => ProductsAdmin(),
-              ),
+              '/productsAdmin'
               // '/productsAdmin'
             );
           },

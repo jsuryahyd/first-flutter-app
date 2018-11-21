@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 
-import './pages/ProductPage.dart';
+// import './pages/ProductPage.dart';
 
-class Products extends StatelessWidget {
+class ProductsList extends StatelessWidget {
   final List items;
-  final Function deleteProduct;
-  Products(this.items, this.deleteProduct);
-
+  ProductsList(this.items);
 
   Widget _builderFunc(BuildContext context, int index) {
     Map item = items[index];
@@ -15,20 +13,26 @@ class Products extends StatelessWidget {
       padding: EdgeInsets.all(5.0),
       child: Column(children: <Widget>[
         Image.asset(item['img']),
-        Text(item['name']),
+        Padding(
+          child: Text(item['name']),
+          padding: EdgeInsets.symmetric(vertical:10.0),
+        ),
         ButtonBar(
           children: <Widget>[
             FlatButton(
               child: Text('Details'),
-              onPressed: () => Navigator.push<bool>(
-                  context,
-                  MaterialPageRoute(
-                      builder: (BuildContext context) => ProductPage(item))).then((bool back){
-                        if(back == true){
-                          deleteProduct(index);
-                        }
-                      }),
-            ),
+              onPressed: () => Navigator.pushNamed<bool>(
+                      context,
+                      // MaterialPageRoute(
+                      //     builder: (BuildContext context) => ProductPage(item))).then((bool back){
+                      //       if(back == true){
+                      //         deleteProduct(index);
+                      //       }
+                      //     }),
+
+                      '/product/' + index.toString())
+                  .then((bool back) {}),
+            )
           ],
         )
       ]),
@@ -41,6 +45,4 @@ class Products extends StatelessWidget {
       itemCount: items.length,
     );
   }
-
-  
 }
