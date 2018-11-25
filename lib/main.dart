@@ -23,10 +23,10 @@ class MyApp extends StatefulWidget {
 
 class MyAppState extends State<MyApp> {
   List<Map<String,dynamic>> _items = [
-    {'name': 'Sweet', 'img': 'assets/images/sweet.jpg','price':200.0},
-    {'name': 'Chutney', 'img': 'assets/images/chutney.jpg','price':35.0},
-    {'name': 'Pickle', 'img': 'assets/images/pickle.jpg','price':80.0},
-    {'name': 'Fry curry', 'img': 'assets/images/fryCurry.jpg','price':40.0}
+    {'name': 'Sweet', 'img': 'assets/images/sweet.jpg','price':200.0,'description':'delicious this product have it.'},
+    {'name': 'Chutney', 'img': 'assets/images/chutney.jpg','price':35.0,'description':'delicious this product have it.'},
+    {'name': 'Pickle', 'img': 'assets/images/pickle.jpg','price':80.0,'description':'delicious this product have it.'},
+    {'name': 'Fry curry', 'img': 'assets/images/fryCurry.jpg','price':40.0,'description':'delicious this product have it.'}
   ];
 
   @override //overrides the build method of StatelessWidget class

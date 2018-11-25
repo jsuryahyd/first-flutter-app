@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../ProductsService.dart';
+import '../childWidgets/ProductsListItem.dart';
 
 
 class ProductsListPage extends StatelessWidget {
@@ -16,6 +16,7 @@ class ProductsListPage extends StatelessWidget {
         child: Column(children: <Widget>[
         AppBar(automaticallyImplyLeading: false, title: Text('choose')),
         ListTile(
+          leading: Icon(Icons.edit),
           title: Text('Manage Products'),
           onTap: () {
             // Navigator.pop(context);//close the drawer
@@ -29,10 +30,15 @@ class ProductsListPage extends StatelessWidget {
       ])),
       appBar: AppBar(
         title: Text('EasyList'),
+        actions: <Widget>[
+          IconButton(
+          icon:Icon(Icons.favorite),
+          onPressed:(){})
+        ],
       ),
       body: Container(
         margin: EdgeInsets.all(8.0),
-        child: Products(this.items),
+        child: ProductsListItem(this.items),
       ),
     );
   }

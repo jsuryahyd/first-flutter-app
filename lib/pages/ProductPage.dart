@@ -15,43 +15,42 @@ class ProductPage extends StatelessWidget {
             appBar: AppBar(
               title: Text('Product Details'),
             ),
-            body: Column(children: <Widget>[
-              Expanded(
+            body: Container(
+              child: SingleChildScrollView(
                   child: Column(children: <Widget>[
                 Image.asset(item['img']),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Padding(
-                      padding: EdgeInsets.all(10.0),
-                      child: Text(
+                Container(
+                  padding: EdgeInsets.all( 15.0),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      Text(
                         item['name'],
                         style: TextStyle(
-                            fontSize: 26.0,
-                            fontFamily: 'Oswald',
-                            fontWeight: FontWeight.bold),
+                            fontFamily: 'Oswald', fontWeight: FontWeight.bold,fontSize: 28.0),
                       ),
+                      Text('INR'+item['price'].toString(),
+                      style: TextStyle(
+                      fontSize: 18.0,
+                      color: Colors.grey,
+                      fontWeight: FontWeight.bold
                     ),
-                    Container(
-                      padding: EdgeInsets.symmetric(horizontal:6.0,vertical: 3.0),
-                      child: Text("INR ${item['price'].toString()}",style: TextStyle(fontSize: 12.0),),
-                      decoration:
-                          BoxDecoration(color: Theme.of(context).accentColor,borderRadius: BorderRadius.circular(5.0)),
-                    ),
-                  ],
+                      ),
+                    ],
+                  ),
                 ),
-                    DecoratedBox(decoration: BoxDecoration(
-                      border: Border.all(color: Colors.grey,width: 1.0),
-                      borderRadius: BorderRadius.circular(4.0)
-                    ),
-                    child: Padding(child: Text('Madhapur, Hyderabad'),padding:EdgeInsets.all(5.0),),),
-                FlatButton(
-                  child: Text('Delete'),
-                  color: Theme.of(context).accentColor,
-                  onPressed: () => showWarningDialog(context),
+                Container(
+                  padding: EdgeInsets.all(10.0),
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    item['description'],
+                    textAlign: TextAlign.center,
+                  ),
                 ),
               ])),
-            ])));
+            )));
   }
 
   showWarningDialog(context) {
