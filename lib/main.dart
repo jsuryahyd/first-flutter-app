@@ -7,6 +7,8 @@ import './pages/productsAdmin.dart';
 import './pages/ProductPage.dart';
 import './pages/ProductsListPage.dart';
 
+import  './models/Product.dart';
+
 void main() {
   runApp(MyApp());
   // debugPaintSizeEnabled = true;
@@ -16,18 +18,13 @@ void main() {
 class MyApp extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    // TODO: implement createState
     return MyAppState();
   }
 }
 
 class MyAppState extends State<MyApp> {
-  List<Map<String,dynamic>> _items = [
-    {'name': 'Sweet', 'img': 'assets/images/sweet.jpg','price':200.0,'description':'delicious this product have it.'},
-    {'name': 'Chutney', 'img': 'assets/images/chutney.jpg','price':35.0,'description':'delicious this product have it.'},
-    {'name': 'Pickle', 'img': 'assets/images/pickle.jpg','price':80.0,'description':'delicious this product have it.'},
-    {'name': 'Fry curry', 'img': 'assets/images/fryCurry.jpg','price':40.0,'description':'delicious this product have it.'}
-  ];
+  
+  
 
   @override //overrides the build method of StatelessWidget class
   Widget build(BuildContext context) {
@@ -40,7 +37,8 @@ class MyAppState extends State<MyApp> {
       home: AuthPage(),
       routes: {
         'createProduct': (BuildContext context) => CreateProduct(),
-        '/productsAdmin': (BuildContext context) => ProductsAdmin(this.addItem,this.deleteItem),
+        '/productsAdmin': (BuildContext context) => ProductsAdmin(addItem:this.addItem,deleteItem: this.deleteItem,
+        items: this._items,editItem: this._editProduct),
       },
       onGenerateRoute: (RouteSettings settings) {
         final List<String> pathElements = settings.name.split('/');
@@ -56,47 +54,22 @@ class MyAppState extends State<MyApp> {
             break;
           case 'productsPage':
             return MaterialPageRoute(builder: (BuildContext context) {
-              return ProductsListPage(
-                  this._items);
+              return ProductsListPage(this._items);
             });
             break;
           default:
             return null;
         }
       },
-      onUnknownRoute: (RouteSettings settings){
+      onUnknownRoute: (RouteSettings settings) {
         return MaterialPageRoute(builder: (BuildContext context) {
-              return ProductsListPage(
-                  this._items);
-            });
+          return ProductsListPage(this._items);
+        });
       },
     );
   }
 
-  void clearItems() {
-    setState(() {
-      {
-        _items = [];
-        print(_items);
-      }
-    });
-  }
-
-  void deleteItem(index) {
-    setState(() {
-      _items.removeAt(index);
-      print(_items);
-    });
-  }
-
-  void addItem(Map<String,dynamic> item) {
-    setState(() {
-      {
-        _items.add(item);
-        print(_items);
-      }
-    });
-  }
+  
 
   // @override
   // void didUpdateWidget(MyApp oldWidget) {

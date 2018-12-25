@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
+import '../models/Product.dart';
 
 class ProductPage extends StatelessWidget {
-  final Map item;
+  final Product item;
   ProductPage(this.item);
 
   Widget build(BuildContext context) {
@@ -18,7 +19,7 @@ class ProductPage extends StatelessWidget {
             body: Container(
               child: SingleChildScrollView(
                   child: Column(children: <Widget>[
-                Image.asset(item['img']),
+                Image.asset(item.imgUrl),
                 Container(
                   padding: EdgeInsets.all( 15.0),
                   child: Row(
@@ -27,11 +28,11 @@ class ProductPage extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
                       Text(
-                        item['name'],
+                        item.title,
                         style: TextStyle(
                             fontFamily: 'Oswald', fontWeight: FontWeight.bold,fontSize: 28.0),
                       ),
-                      Text('INR'+item['price'].toString(),
+                      Text('INR '+item.price.toString(),
                       style: TextStyle(
                       fontSize: 18.0,
                       color: Colors.grey,
@@ -45,7 +46,7 @@ class ProductPage extends StatelessWidget {
                   padding: EdgeInsets.all(10.0),
                   alignment: Alignment.centerLeft,
                   child: Text(
-                    item['description'],
+                    item.description,
                     textAlign: TextAlign.center,
                   ),
                 ),
