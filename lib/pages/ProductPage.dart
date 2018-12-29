@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
-import '../models/Product.dart';
+import 'package:scoped_model/scoped_model.dart';
+import '../scope_model/products.dart';
 
 class ProductPage extends StatelessWidget {
-  final Product item;
-  ProductPage(this.item);
+  final int itemId;
+  ProductPage(this.itemId);
 
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -17,7 +18,9 @@ class ProductPage extends StatelessWidget {
               title: Text('Product Details'),
             ),
             body: Container(
-              child: SingleChildScrollView(
+              child: ScopedModelDescendant<ProductsScopedModel>(builder: (BuildContext context,Widget child,ProductsScopedModel model){
+                final item = model.getProduct(itemId); 
+                return SingleChildScrollView(
                   child: Column(children: <Widget>[
                 Image.asset(item.imgUrl),
                 Container(
@@ -50,7 +53,8 @@ class ProductPage extends StatelessWidget {
                     textAlign: TextAlign.center,
                   ),
                 ),
-              ])),
+              ],),);
+              },)
             )));
   }
 

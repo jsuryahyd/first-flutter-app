@@ -89,6 +89,7 @@ class AuthPageState extends State<AuthPage> {
                             _loginFormKey.currentState.save();
                             if (_loginFormKey.currentState.validate() &&
                                 _acceptTerms == true) {
+                                  print('email:' + _emailInput + ' pwd:' +_pwdInput);
                               Navigator.pushReplacementNamed(
                                   context, 'ProductsPage');
                             }

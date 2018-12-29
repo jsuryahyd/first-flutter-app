@@ -7,8 +7,8 @@ import '../models/Product.dart';
 /// product edit and create
 ///
 class ProductInputPage extends StatefulWidget {
-  final product;
-  ProductInputPage({this.product});
+  
+  ProductInputPage();
   @override
   State<StatefulWidget> createState() {
     return ProductInputPageState();
@@ -24,17 +24,20 @@ class ProductInputPageState extends State<ProductInputPage> {
   };
   final GlobalKey<FormState> _globalKey = GlobalKey<FormState>();
 
-  Widget build(context) {
+  Widget build(context) { 
+    return new ScopedModelDescendant(builder: (BuildContext context,Widget child,ProductsScopedModel model){
     //edit mode
-    if (widget.product != null) {
+    if (model.selectedProductId != null) {
       return new Scaffold(
         appBar: AppBar(
           title: Text("Edit Product"),
         ),
-        body: this.pageContent(product: widget.product),
+        body: this.pageContent(product:model.getProduct(model.selectedProductId)),
       );
     }
     return this.pageContent();
+    },);
+
   }
 
   Widget pageContent({product}) {

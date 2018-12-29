@@ -18,42 +18,49 @@ class ProductsScopedModel extends Model {
         description: 'Tasty. isn\'t it?')
   ];
 
+  int _selectedProductId;
+
+  setSelectedProductIndex(id) {
+    return _selectedProductId = id;
+  }
+
+  int get selectedProductId => _selectedProductId;
+
+  List<Product> get products => _items;
+
   void clearItems() {
-    setState(() {
+  
       {
         _items = [];
         print(_items);
       }
-    });
   }
 
   void deleteItem(String id) {
-    setState(() {
-      _items = _items.where((item) => item.id != id).toList();
-      // _items.removeWhere((item)=>item['id'] == id)
-      print(_items);
-    });
+    _items = _items.where((item) => item.id != id).toList();
+    // _items.removeWhere((item)=>item['id'] == id)
+    print(_items);
   }
 
   void addItem(Product item) {
-    setState(() {
-      var lastItem = _items.last;
-      var lastId = lastItem != null ? lastItem.id : 0;
-      item.id = (int.parse(lastId) + 1).toString();
-      _items.add(item);
-      print(_items);
-    });
+    var lastItem = _items.last;
+    var lastId = lastItem != null ? lastItem.id : 0;
+    item.id = (int.parse(lastId) + 1).toString();
+    _items.add(item);
+    print(_items);
   }
 
   void editProduct(String id, Map<String, dynamic> changedValues) {
-    setState(() {
-      _items.removeWhere((item) => item.id == id);
-      _items.add(Product(
-          id: id,
-          title: changedValues['title'],
-          price: changedValues['price'],
-          description: changedValues['description'],
-          imgUrl: changedValues['img']));
-    });
+    _items.removeWhere((item) => item.id == id);
+    _items.add(Product(
+        id: id,
+        title: changedValues['title'],
+        price: changedValues['price'],
+        description: changedValues['description'],
+        imgUrl: changedValues['img']));
+  }
+
+  Product getProduct(id){
+    return _items.firstWhere((p)=>p.id == id);
   }
 }

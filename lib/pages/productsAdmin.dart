@@ -27,8 +27,8 @@ class ProductsAdmin extends StatelessWidget {
               ),
             ])),
         body: TabBarView(children:<Widget>[
-          ProductInputPage(addProduct:this.addItem),
-          MyProductsPage(this.items,this.editItem,this.deleteItem)
+          ProductInputPage(),
+          MyProductsPage()
         ])
       ),
     );

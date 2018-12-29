@@ -7,7 +7,6 @@ import './pages/productsAdmin.dart';
 import './pages/ProductPage.dart';
 import './pages/ProductsListPage.dart';
 
-import  './models/Product.dart';
 
 void main() {
   runApp(MyApp());
@@ -15,14 +14,7 @@ void main() {
   // debugPaintPointersEnabled = true;
 }
 
-class MyApp extends StatefulWidget {
-  @override
-  State<StatefulWidget> createState() {
-    return MyAppState();
-  }
-}
-
-class MyAppState extends State<MyApp> {
+class MyApp extends StatelessWidget{
   
   
 
@@ -37,8 +29,7 @@ class MyAppState extends State<MyApp> {
       home: AuthPage(),
       routes: {
         'createProduct': (BuildContext context) => CreateProduct(),
-        '/productsAdmin': (BuildContext context) => ProductsAdmin(addItem:this.addItem,deleteItem: this.deleteItem,
-        items: this._items,editItem: this._editProduct),
+        '/productsAdmin': (BuildContext context) => ProductsAdmin(),
       },
       onGenerateRoute: (RouteSettings settings) {
         final List<String> pathElements = settings.name.split('/');
@@ -48,13 +39,12 @@ class MyAppState extends State<MyApp> {
         switch (pathElements[1]) {
           case 'product':
             var index = int.parse(pathElements[2]);
-            var item = _items[index];
             return MaterialPageRoute<bool>(
-                builder: (BuildContext context) => ProductPage(item));
+                builder: (BuildContext context) => ProductPage(index));
             break;
           case 'productsPage':
             return MaterialPageRoute(builder: (BuildContext context) {
-              return ProductsListPage(this._items);
+              return ProductsListPage();
             });
             break;
           default:
@@ -63,17 +53,9 @@ class MyAppState extends State<MyApp> {
       },
       onUnknownRoute: (RouteSettings settings) {
         return MaterialPageRoute(builder: (BuildContext context) {
-          return ProductsListPage(this._items);
+          return ProductsListPage();
         });
       },
     );
   }
-
-  
-
-  // @override
-  // void didUpdateWidget(MyApp oldWidget) {
-  //   super.didUpdateWidget(oldWidget);
-  //   print(oldWidget);
-  // }
 }
