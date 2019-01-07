@@ -2,10 +2,23 @@ import 'package:flutter/material.dart';
 
 import '../childWidgets/ProductsListItem.dart';
 import 'package:scoped_model/scoped_model.dart';
-import '../scope_model/products.dart';
+import '../appScopedModel.dart';
 
-class ProductsListPage extends StatelessWidget {
-  ProductsListPage();
+class ProductsListPage extends StatefulWidget {
+  final AppScopedModel model;
+  ProductsListPage(this.model);
+  @override
+  State<StatefulWidget> createState() => ProductsListPageState();
+}
+
+class ProductsListPageState extends State<ProductsListPage> {
+  @override
+// @mustCallSuper
+  void initState() {
+    widget.model.fetchProducts();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,15 +38,39 @@ class ProductsListPage extends StatelessWidget {
         appBar: AppBar(
           title: Text('EasyList'),
           actions: <Widget>[
-            IconButton(icon: Icon(Icons.favorite), onPressed: () {})
+            ScopedModelDescendant(
+              builder:
+                  (BuildContext context, Widget child, AppScopedModel model) {
+                return IconButton(
+                  icon: Icon(model.showFavourites
+                      ? Icons.favorite
+                      : Icons.favorite_border),
+                  onPressed: model.toggleFavourites,
+                );
+              },
+            )
           ],
         ),
-        body: ScopedModelDescendant(
-          builder:
-              (BuildContext context, Widget child, ProductsScopedModel model) {
-            return Container(
-                margin: EdgeInsets.all(8.0),
-                child: ProductsListItem(model.products));
+        body: ScopedModelDescendant<AppScopedModel>(
+          builder: (BuildContext context, Widget child, AppScopedModel model) {
+            return model.loadingProducts
+                ? Center(
+                    child: CircularProgressIndicator(),
+                  )
+                : model.products.isEmpty
+                    ? Center(
+                        child: Text('No Items Found'),
+                      )
+                    : Container(
+                        margin: EdgeInsets.all(8.0),
+                        child: RefreshIndicator(
+                            child: ProductsListItem(model.showFavourites
+                                ? model.products
+                                    .where((p) => p.favourite)
+                                    .toList()
+                                : model.products),
+                            onRefresh: ()=>model.fetchProducts(pullRefresh: true),),
+                      );
           },
         ));
   }

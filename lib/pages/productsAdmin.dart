@@ -1,14 +1,10 @@
 import 'package:flutter/material.dart';
 import './productInputPage.dart';
 import './MyProductsPage.dart';
-import '../models/Product.dart';
-
+import '../appScopedModel.dart';
 class ProductsAdmin extends StatelessWidget {
- final Function addItem;
- final Function deleteItem;
- final List<Product> items;
- final Function editItem;
-  ProductsAdmin({this.addItem,this.deleteItem,this.items,this.editItem});
+ final AppScopedModel model;
+  ProductsAdmin(this.model);
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -28,7 +24,7 @@ class ProductsAdmin extends StatelessWidget {
             ])),
         body: TabBarView(children:<Widget>[
           ProductInputPage(),
-          MyProductsPage()
+          MyProductsPage(model)
         ])
       ),
     );

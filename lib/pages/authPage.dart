@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:scoped_model/scoped_model.dart';
+import '../appScopedModel.dart';
 
 class AuthPage extends StatefulWidget {
   @override
@@ -12,7 +14,7 @@ class AuthPageState extends State<AuthPage> {
   String _pwdInput = '';
   double _formWidth = 300.0; //default
   bool _acceptTerms = false;
-    final GlobalKey<FormState> _loginFormKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> _loginFormKey = GlobalKey<FormState>();
   Widget build(BuildContext context) {
     double deviceWidth = MediaQuery.of(context).size.width;
     _formWidth = deviceWidth > 550.0 ? deviceWidth * 0.6 : deviceWidth * 0.9;
@@ -34,7 +36,7 @@ class AuthPageState extends State<AuthPage> {
               child: Container(
                 width: _formWidth,
                 child: Form(
-                    key: _loginFormKey,
+                  key: _loginFormKey,
                   child: Column(
                     children: <Widget>[
                       TextFormField(
@@ -84,17 +86,23 @@ class AuthPageState extends State<AuthPage> {
                       SizedBox(
                         height: 30.0,
                       ),
-                      RaisedButton(
-                          onPressed: () {
-                            _loginFormKey.currentState.save();
-                            if (_loginFormKey.currentState.validate() &&
-                                _acceptTerms == true) {
-                                  print('email:' + _emailInput + ' pwd:' +_pwdInput);
-                              Navigator.pushReplacementNamed(
-                                  context, 'ProductsPage');
-                            }
-                          },
-                          child: Text('Login'))
+                      ScopedModelDescendant(
+                        builder: (BuildContext context, Widget child,
+                            AppScopedModel model) {
+                          return RaisedButton(
+                            onPressed: () {
+                              _loginFormKey.currentState.save();
+                              model.login(_emailInput, _pwdInput);
+                              if (_loginFormKey.currentState.validate() &&
+                                  _acceptTerms == true) {
+                                Navigator.pushReplacementNamed(
+                                    context, 'ProductsPage');
+                              }
+                            },
+                            child: Text('Login'),
+                          );
+                        },
+                      ),
                     ],
                   ),
                 ),

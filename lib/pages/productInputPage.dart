@@ -1,13 +1,13 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
-import '../scope_model/products.dart';
-import '../models/Product.dart';
-
+import '../appScopedModel.dart';
+// import 'dart:async';
 ///
 /// product edit and create
 ///
 class ProductInputPage extends StatefulWidget {
-  
   ProductInputPage();
   @override
   State<StatefulWidget> createState() {
@@ -24,23 +24,32 @@ class ProductInputPageState extends State<ProductInputPage> {
   };
   final GlobalKey<FormState> _globalKey = GlobalKey<FormState>();
 
-  Widget build(context) { 
-    return new ScopedModelDescendant(builder: (BuildContext context,Widget child,ProductsScopedModel model){
-    //edit mode
-    if (model.selectedProductId != null) {
-      return new Scaffold(
-        appBar: AppBar(
-          title: Text("Edit Product"),
-        ),
-        body: this.pageContent(product:model.getProduct(model.selectedProductId)),
-      );
-    }
-    return this.pageContent();
-    },);
-
+  Widget build(context) {
+    return new ScopedModelDescendant<AppScopedModel>(
+      builder: (BuildContext context, Widget child, AppScopedModel model) {
+        //edit mode
+        if (model.selectedProductId != null) {
+          return new Scaffold(
+              appBar: AppBar(
+                title: Text("Edit Product"),
+              ),
+              body: this.pageContent(
+                  product: model.getProduct(model.selectedProductId),
+                  addItem: model.addItem,
+                  editProduct: model.editProduct,
+                  resetSelectedProductId: model.setSelectedProductId),);
+        }
+        return this.pageContent(addItem: model.addItem,addProductProgress:model.addProductProgress);
+      },
+    );
   }
 
-  Widget pageContent({product}) {
+  Widget pageContent(
+      {product,
+      addItem,
+      editProduct,
+      resetSelectedProductId,
+      addProductProgress}) {
     double deviceWidth = MediaQuery.of(context).size.width;
     double formWidth =
         deviceWidth > 550.0 ? deviceWidth * 0.6 : deviceWidth * 0.9;
@@ -55,13 +64,16 @@ class ProductInputPageState extends State<ProductInputPage> {
           key: _globalKey,
           child: ListView(
             children: <Widget>[
-              _buildTitleInput(product?.name),
+              _buildTitleInput(product?.title),
               _buildDescriptionInput(product?.description),
               _buildPriceInput(product?.price),
               SizedBox(
                 height: 10.0,
               ),
-              _buildSubmitButton(product?.id),
+              _buildSubmitButton(product?.id,
+                  addItem: addItem,
+                  editProduct: editProduct,
+                  resetSelectedProductId: resetSelectedProductId,addProductProgress:addProductProgress),
             ],
           ),
         ),
@@ -118,32 +130,41 @@ class ProductInputPageState extends State<ProductInputPage> {
     );
   }
 
-  Widget _buildSubmitButton(editableProductId) {
-    return ScopedModelDescendant<ProductsScopedModel>(
-      builder: (BuildContext context, Widget child, ProductsScopedModel model) {
-        return RaisedButton(
-          onPressed: submitForm(model.addItem,model.editProduct,editableProductId),
-          child: Text('Add Product'),
-          color: Theme.of(context).accentColor,
-        );
-      },
-    );
+  Widget _buildSubmitButton(editableProductId,
+      {addItem, editProduct, resetSelectedProductId, addProductProgress}) {
+    return addProductProgress == true ? Center(
+            child: CircularProgressIndicator(),
+          )
+        : RaisedButton(
+            onPressed: () => submitForm(addItem, editProduct, editableProductId,
+                resetSelectedProductId),
+            child: Text(
+                editableProductId != null ? 'Edit Product' : 'Add Product'),
+            color: Theme.of(context).accentColor,
+          );
   }
 
-  submitForm(Function addProduct,Function editProduct, editableProductId) {
+  submitForm(Function addProduct, Function editProduct, editableProductId,
+      resetSelectedProductId) async {
     if (!_globalKey.currentState.validate()) {
       return false;
     }
     _globalKey.currentState.save();
     if (editableProductId != null) {
       editProduct(editableProductId, _formData);
+      Navigator.pushReplacementNamed(context, '/productsPage');
+    
     } else {
-      addProduct(Product(
-          title: _formData['title'],
-          price: _formData['price'],
-          description: _formData['description'],
-          imgUrl: _formData['img']));
+      addProduct({
+              "title": _formData['title'],
+              "price": _formData['price'],
+              "description": _formData['description'],
+              "imgUrl": _formData['img']})
+          .then((bool success) =>
+              Navigator.pushReplacementNamed(context, '/productsPage')
+                  .then((_) {
+                resetSelectedProductId(null);
+              }));
     }
-    Navigator.pushReplacementNamed(context, '/productsPage');
   }
 }
