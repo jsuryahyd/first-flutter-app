@@ -20,7 +20,7 @@ class ProductInputPageState extends State<ProductInputPage> {
     'title': '',
     'description': '',
     'price': null,
-    'img': 'assets/images/sweet.jpg'
+    'img': ''
   };
   final GlobalKey<FormState> _globalKey = GlobalKey<FormState>();
 
