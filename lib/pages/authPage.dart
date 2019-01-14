@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
 import '../appScopedModel.dart';
+import '../models/authModel.dart';
 
 class AuthPage extends StatefulWidget {
   @override
@@ -14,6 +15,8 @@ class AuthPageState extends State<AuthPage> {
   String _pwdInput = '';
   double _formWidth = 300.0; //default
   bool _acceptTerms = false;
+  AuthMode _authMode = AuthMode.login;
+  final TextEditingController _pwdController = TextEditingController();
   final GlobalKey<FormState> _loginFormKey = GlobalKey<FormState>();
   Widget build(BuildContext context) {
     double deviceWidth = MediaQuery.of(context).size.width;
@@ -61,12 +64,13 @@ class AuthPageState extends State<AuthPage> {
                       ),
                       TextFormField(
                         obscureText: true,
+                        controller: _pwdController,
                         onSaved: (String pwdInput) {
                           _pwdInput = pwdInput;
                         },
                         validator: (String value) {
-                          if (value.isEmpty || value.length <= 8) {
-                            return 'Password must contain atleast one capital letter and one number.';
+                          if (value.isEmpty || value.length < 8) {
+                            return 'Password must not be empty and must contain atleast 8 characters.';
                           }
                         },
                         decoration: InputDecoration(
@@ -74,7 +78,8 @@ class AuthPageState extends State<AuthPage> {
                             filled: true,
                             fillColor: Theme.of(context).accentColor),
                       ),
-                      SwitchListTile(
+                      _confirmPwdField(),
+                      _authMode == AuthMode.login ? Container() : SwitchListTile(
                         value: _acceptTerms,
                         onChanged: (bool isSwitched) {
                           setState(() {
@@ -86,20 +91,31 @@ class AuthPageState extends State<AuthPage> {
                       SizedBox(
                         height: 30.0,
                       ),
+                      FlatButton(
+                        child: Text(
+                            "Switch to ${_authMode == AuthMode.login ? 'Signup' : 'Login'}"),
+                        onPressed: () {
+                          setState(() {
+                            _authMode = _authMode == AuthMode.login
+                                ? AuthMode.signup
+                                : AuthMode.login;
+                          });
+                        },
+                      ),
                       ScopedModelDescendant(
                         builder: (BuildContext context, Widget child,
                             AppScopedModel model) {
-                          return RaisedButton(
+                          return model.authProgress ? Center(child:CircularProgressIndicator()) : RaisedButton(
                             onPressed: () {
                               _loginFormKey.currentState.save();
-                              model.login(_emailInput, _pwdInput);
-                              if (_loginFormKey.currentState.validate() &&
-                                  _acceptTerms == true) {
-                                Navigator.pushReplacementNamed(
-                                    context, 'ProductsPage');
+                              if (!_loginFormKey.currentState.validate()) {
+                                return false;
                               }
+                              _authenticate(model.authenticate,_authMode);
                             },
-                            child: Text('Login'),
+                            child: Text(_authMode == AuthMode.login
+                                ? 'Login'.toUpperCase()
+                                : 'Signup'.toUpperCase()),
                           );
                         },
                       ),
@@ -111,4 +127,84 @@ class AuthPageState extends State<AuthPage> {
       ),
     );
   }
+
+  _confirmPwdField() {
+    return _authMode == AuthMode.signup
+        ? Column(children: [
+            SizedBox(height: 10.0),
+            TextFormField(
+              obscureText: true,
+              onSaved: (String pwdInput) {},
+              validator: (String value) {
+                if (value.isEmpty) {
+                  return 'Password must not be empty and must contain atleast 8 characters.';
+                }
+                if (value != _pwdController.text) {
+                  return 'Passwords doesn\'t match';
+                }
+              },
+              decoration: InputDecoration(
+                  labelText: 'Confirm Password',
+                  filled: true,
+                  fillColor: Theme.of(context).accentColor),
+            ),
+          ])
+        : Container();
+  }
+
+  _authenticate(authFunc,authMode) async {
+    final Map<String, dynamic> loginData =
+        await authFunc(_emailInput, _pwdInput,authMode).catchError((err) {
+      print(err);
+    });
+    if (loginData == null || !loginData['success'])
+      return showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text('Login Failed'),
+              content: Text(loginData != null
+                  ? loginData["msg"]
+                  : 'An Error occured while authenticating.'),
+              actions: <Widget>[
+                FlatButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: Text('Ok'),
+                ),
+              ],
+            );
+          });
+    Navigator.pushReplacementNamed(context, 'ProductsPage');
+  }
+
+  // _signup(signUp) async {
+  //   if(_acceptTerms != true){
+  //     return false;
+  //   }
+  //   final Map<String, dynamic> signupData = await signUp(_emailInput, _pwdInput).catchError((err) {
+  //     print(err);
+  //   });
+  //   if (signupData == null || !signupData['success'])
+  //     return showDialog(
+  //         context: context,
+  //         builder: (BuildContext context) {
+  //           return AlertDialog(
+  //             title: Text('Signup Failed'),
+  //             content: Text(signupData != null
+  //                 ? signupData["msg"]
+  //                 : 'An Error occured while authenticating.'),
+  //             actions: <Widget>[
+  //               FlatButton(
+  //                 onPressed: () {
+  //                   Navigator.pop(context);
+  //                 },
+  //                 child: Text('Ok'),
+  //               ),
+  //             ],
+  //           );
+  //         });
+  //   Navigator.pushReplacementNamed(context, 'ProductsPage');
+  // }
 }
