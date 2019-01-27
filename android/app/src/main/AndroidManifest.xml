@@ -43,7 +43,7 @@
             <activity android:name="com.apptreesoftware.mapview.MapActivity" android:theme="@style/Theme.AppCompat.Light.DarkActionBar"/>
             <!-- /added for project --> 
             <!-- added for project --> 
-        <meta-data android:name="com.google.android.maps.v2.API_KEY" android:value="AIzaSyA0xwJcwcIgI74NDDycNZdtJVtqgMh5R6U"/>
+        <meta-data android:name="com.google.android.maps.v2.API_KEY" android:value="API-KEY"/>
      <meta-data android:name="com.google.android.gms.version" android:value="@integer/google_play_services_version"/>
             <!-- /added for project --> 
     </application>
