@@ -10,15 +10,37 @@ import './pages/ProductsListPage.dart';
 import 'package:scoped_model/scoped_model.dart';
 // import './scope_model/products.dart';
 import './appScopedModel.dart';
-
+import 'package:map_view/map_view.dart';
+import './keys.dart';
 void main() {
+  MapView.setApiKey(mapsApiKey);
   runApp(MyApp());
   // debugPaintSizeEnabled = true;
   // debugPaintPointersEnabled = true;
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
+
+@override
+State<StatefulWidget> createState() {
+    // TODO: implement createState
+    return MyAppState();
+  }
+
+
+}
+
+class MyAppState extends State<MyApp>{
   final appStateModel = new AppScopedModel();
+bool isLoggedIn = false;
+void initState(){
+  appStateModel.autoLogin();
+  appStateModel.authSubject.listen((bool isAuthorized) => setState((){
+    isLoggedIn = isAuthorized;
+    }));
+  super.initState();
+}
+
   @override //overrides the build method of StatelessWidget class
   Widget build(BuildContext context) {
     return ScopedModel<AppScopedModel>(
@@ -29,10 +51,14 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.deepOrange,
           accentColor: Colors.greenAccent,
         ),
-        home: AuthPage(),
+        // home: AuthPage(),
         routes: {
-          'createProduct': (BuildContext context) => CreateProduct(),
-          '/productsAdmin': (BuildContext context) => ProductsAdmin(appStateModel),
+          // '/':(BuildContext context) => ScopedModelDescendant(builder: (BuildContext context,Widget child,AppScopedModel model ){
+          //   return model.user == null ? AuthPage(): ProductsListPage(appStateModel) ;
+          // },),
+          '/':(BuildContext context) =>isLoggedIn ?  ProductsListPage(appStateModel) : AuthPage(),
+          'createProduct': (BuildContext context) => isLoggedIn ? CreateProduct() : AuthPage(),
+          '/productsAdmin': (BuildContext context) => isLoggedIn ?  ProductsAdmin(appStateModel): AuthPage(),
         },
         onGenerateRoute: (RouteSettings settings) {
           final List<String> pathElements = settings.name.split('/');

@@ -4,11 +4,14 @@ import '../models/Product.dart';
 import 'dart:async';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-
-mixin ProductsScopedModel on Model {
+import './connectedScopedModel.dart';
+import '../models/userModel.dart';
+mixin ProductsScopedModel on ConnectedScopedModel {
   bool _fetchingProducts = false;
+  // User user = ConnectedScopedModel.user;
   get loadingProducts => _fetchingProducts;
 bool _addProductProgress = false;
+User user;
 get addProductProgress => _addProductProgress;
   List<Product> _items = [
     // Product(
@@ -94,7 +97,7 @@ var newValues = {
         "price": changedValues['price'],
         "description": changedValues['description'],
         "imgUrl": changedValues['img'],
-        "favourite": getProduct(id).favourite
+        "wishListedUsers": getProduct(id).wishListedUsers
 };
 
 http.Response updated = await http.put("https://flutter-udemy-course-practice.firebaseio.com/products/$id.json",body: json.encode(newValues)).catchError((err)=>print(err));
@@ -109,7 +112,7 @@ print(updated);
         price: changedValues['price'],
         description: changedValues['description'],
         imgUrl: changedValues['img'],
-        favourite: getProduct(id).favourite);
+        wishListedUsers: getProduct(id).wishListedUsers);
     notifyListeners();
   }
 
@@ -140,7 +143,7 @@ notifyListeners();
 }
     http.Response fetchProductsResponse = await http
         .get(
-            'https://flutter-udemy-course-practice.firebaseio.com/products.json')
+            'https://flutter-udemy-course-practice.firebaseio.com/products.json?auth=$user.idToken')
         .catchError((err) => print(err));
 
     if (fetchProductsResponse.statusCode != 201 &&
@@ -159,7 +162,7 @@ notifyListeners();
             id: productFirebaseId,
             price: item['price'],
             title: item['title'],
-            favourite: item['favourite']??=false,
+            wishListedUsers: item['wishListedUsers'],
             imgUrl: item['imgUrl'],
             description: item['description']),
       );

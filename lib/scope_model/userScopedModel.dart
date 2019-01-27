@@ -3,10 +3,14 @@ import 'package:http/http.dart' as http;
 import 'package:scoped_model/scoped_model.dart';
 import '../models/userModel.dart';
 import '../models/authModel.dart';
-mixin UserScopedModel on Model {
+
+import './connectedScopedModel.dart';
+
+mixin UserScopedModel on ConnectedScopedModel {
   User _loggedInUser;
   bool _authProgess = false; 
   get authProgress =>  _authProgess;
+  get user => _loggedInUser;
   Future<Map<String, dynamic>> authenticate(String email, String pwd,[authMode=AuthMode.login]) async {
     this._authProgess = true;
     notifyListeners();
@@ -31,6 +35,7 @@ mixin UserScopedModel on Model {
     }
     var authResponseBody = json.decode(authResponse.body);
     _authProgess = false;
+    print('response -- ' + jsonEncode(authResponseBody));
     notifyListeners();
     if (authResponse.statusCode != 200) {
       var msg = 'An Error Occured while Authentication.';
@@ -120,3 +125,5 @@ mixin UserScopedModel on Model {
     return _loggedInUser.details;
   }
 }
+
+

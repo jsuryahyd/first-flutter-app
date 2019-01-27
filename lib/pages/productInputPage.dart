@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
 import '../appScopedModel.dart';
+import './partials/locationInput.dart';
 // import 'dart:async';
 ///
 /// product edit and create
@@ -67,6 +68,7 @@ class ProductInputPageState extends State<ProductInputPage> {
               _buildTitleInput(product?.title),
               _buildDescriptionInput(product?.description),
               _buildPriceInput(product?.price),
+              LocationInput(product),
               SizedBox(
                 height: 10.0,
               ),

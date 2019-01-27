@@ -17,7 +17,7 @@ final AppScopedModel model;
 class MyProductsPageState extends State<MyProductsPage>{
 @override
 initState(){
-widget.model.fetchProducts();
+widget.model.fetchProducts(thisUserProductsOnly: true);
 super.initState();
 }
 
@@ -36,6 +36,9 @@ super.initState();
                 if (swipeDirection == DismissDirection.endToStart) {
                   print('end to start');
                   return model.deleteItem(products[index].id);
+                }else{
+                  print('start to end');
+                  return false;
                 }
               },
               child: Column(

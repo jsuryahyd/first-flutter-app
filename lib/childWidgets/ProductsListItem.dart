@@ -72,10 +72,10 @@ Widget build(BuildContext context) {
               builder: (BuildContext context, Widget child,
                   AppScopedModel model) {
                 return IconButton(
-                  icon: Icon(item.favourite ? Icons.favorite : Icons.favorite_border),
+                  icon: Icon(item.isFavourite ? Icons.favorite : Icons.favorite_border),
                   color: Theme.of(context).accentColor,
                   onPressed: () {
-                    item.favourite ? model.unFavouriteProduct(item.id) :  model.favouriteProduct(item.id);
+                    item.isFavourite ? model.unFavouriteProduct(item.id) :  model.favouriteProduct(item.id);
                   },
                 );
               },

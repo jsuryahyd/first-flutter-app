@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../childWidgets/ProductsListItem.dart';
 import 'package:scoped_model/scoped_model.dart';
 import '../appScopedModel.dart';
-
+import './partials/LogoutListTile.dart';
 class ProductsListPage extends StatefulWidget {
   final AppScopedModel model;
   ProductsListPage(this.model);
@@ -33,7 +33,9 @@ class ProductsListPageState extends State<ProductsListPage> {
               Navigator.popAndPushNamed(context, '/productsAdmin');
               // Navigator.pushReplacementNamed(context,'createProduct');
             },
-          )
+          ),
+          Divider(),
+          LogoutListTile(),
         ])),
         appBar: AppBar(
           title: Text('EasyList'),
@@ -66,7 +68,7 @@ class ProductsListPageState extends State<ProductsListPage> {
                         child: RefreshIndicator(
                             child: ProductsListItem(model.showFavourites
                                 ? model.products
-                                    .where((p) => p.favourite)
+                                    .where((p) => p.isFavourite)
                                     .toList()
                                 : model.products),
                             onRefresh: ()=>model.fetchProducts(pullRefresh: true),),

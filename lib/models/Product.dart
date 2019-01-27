@@ -7,32 +7,35 @@ class Product {
   final double price;
   final String description;
   final String imgUrl;
-  bool favourite;
+  var wishListedUsers;
+  bool isFavourite;
+  final String createdBy;
 
   Product(
       {this.id,
+      this.createdBy,
       @required this.title,
       @required this.price,
       @required this.description,
       this.imgUrl,
-      this.favourite=false});
+      this.isFavourite,
+      this.wishListedUsers});
 
-
-  favouriteProduct(){
-this.favourite = true;
+  favouriteProduct() {
+    isFavourite = true;
   }
 
-  unFavouriteProduct(){
-this.favourite = false;
+  unFavouriteProduct() {
+    isFavourite = false;
   }
 
-  dynamic serialize(){
+  dynamic serialize() {
     return {
-      "title":this.title,
-      "price":this.price,
-      "description":this.description,
-      "imgUrl":this.imgUrl,
-      "favourite":this.favourite
+      "title": this.title,
+      "price": this.price,
+      "description": this.description,
+      "imgUrl": this.imgUrl,
+      "favourite": this.isFavourite
     };
   }
 }
