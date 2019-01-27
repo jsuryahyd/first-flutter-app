@@ -3,7 +3,7 @@
 
 .packages
 .pub/
-
+lib/keys.dart
 build/
 
 .flutter-plugins
